@@ -1,27 +1,50 @@
 # This file stores the chatbot's response logic.
 # Keeping responses separate makes the system easier to expand later.
 
+from chatbot.nlp_utils import preprocess_text
+
+
+# Define intents and keywords
+INTENTS = {
+    "greeting": {"hello", "hi", "hey", "wagwan", "wassup", "whatsup", "bho"},
+    "name": {"name", "who"},
+    "help": {"help", "support", "assist"},
+    "exit": {"bye", "exit", "quit"},
+
+    }
+
+def detect)intent(tokens: list) -> str:
+  """
+    Determines the user's intent based on keywords.
+    """
+
+  for intent, keywords in INTENTS.items():
+      if any(token in keywords for token in tokens):
+          return intent
+        # ⚠️ KEY LINE: Keyword-based intent detection
+    return "unknown"
+
+    
+
 def get_response(user_input: str) -> str:
     """
     Determines the chatbot's response based on user input.
     """
 
-    # Normalize input to make matching easier
-    user_input = user_input.lower().strip()
-    # ⚠️ KEY LINE: Normalizing text avoids bugs caused by capitalization or spaces
+    tokens = preprocess_text(user_input)
+    intent - detect_intent(tokens)
 
-    # --- Rule-based responses ---
-    if user_input in ("hi", "hello", "hey"):
+    if intent == "greeting":
         return "Hello! How can I help you today?"
+    
+    elif intent == "name":
+        return "I'm your virtual assistant. You can customize me anytime."
 
-    elif "your name" in user_input:
-        return "I'm your virtual assistant. You can name me if you like!"
+    elif intent == "help":
+        return "I can chat, answer questions, and soon perform tasks."
 
-    elif "help" in user_input:
-        return "I can chat with you for now. Soon I'll be able to do much more."
-
-    elif user_input in ("bye", "exit", "quit"):
-        return "Goodbye! Have a great day."
+    elif intent == "exit":
+        return "Goodbye! See you next time."
 
     else:
-        return "I'm not sure how to respond to that yet."
+        return "I'm still learning. Could you rephrase that?"
