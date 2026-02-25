@@ -1,6 +1,7 @@
 # main.py is the starting point of your virtual assistant.
 
 from chatbot.engine import ChatbotEngine
+from chatbot.ml_model import IntentClassifier
 
 
 def main():
@@ -9,18 +10,25 @@ def main():
     """
 
     bot = ChatbotEngine()
+    classifier = IntentClassifier()
+    
+    
     # ⚠️ KEY LINE: Creating an instance of the chatbot engine
 
-    print("🤖 Virtual Assistant is running. Type 'exit' to quit.\n")
+    print("🤖 ML-Powered Virtual Assistant is running. Type 'exit' to quit.\n")
 
     while True:
         user_input = input("You: ")
-
+        
+        intent = classifier.predict_intent(user_input)
         response = bot.process_message(user_input)
+        
         print(f"Bot: {response}")
 
         # Exit condition
-        if user_input.lower().strip() in ("exit", "quit", "bye"):
+# %%
+        if  intent == "exit":
+
             break
             # ⚠️ KEY LINE: Cleanly exits the infinite loop
 
