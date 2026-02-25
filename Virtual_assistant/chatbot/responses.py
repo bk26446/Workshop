@@ -1,50 +1,33 @@
 # This file stores the chatbot's response logic.
 # Keeping responses separate makes the system easier to expand later.
 
-from chatbot.nlp_utils import preprocess_text
 
+from chatbot.ml_model import IntentClassifier
 
-# Define intents and keywords
-INTENTS = {
-    "greeting": {"hello", "hi", "hey", "wagwan", "wassup", "whatsup", "bho"},
-    "name": {"name", "who"},
-    "help": {"help", "support", "assist"},
-    "exit": {"bye", "exit", "quit"},
+classifier = IntentClassifier()
 
-    }
-
-def detect)intent(tokens: list) -> str:
-  """
-    Determines the user's intent based on keywords.
-    """
-
-  for intent, keywords in INTENTS.items():
-      if any(token in keywords for token in tokens):
-          return intent
-        # ⚠️ KEY LINE: Keyword-based intent detection
-    return "unknown"
-
-    
 
 def get_response(user_input: str) -> str:
+    
+    intent = classifier.predict_intent(user_input)
+    # ⚠️ KEY LINE: Machine learning replaces rules here
+    
     """
-    Determines the chatbot's response based on user input.
+    Generates response using ML-based intent detection.
     """
-
-    tokens = preprocess_text(user_input)
-    intent - detect_intent(tokens)
-
     if intent == "greeting":
         return "Hello! How can I help you today?"
     
     elif intent == "name":
-        return "I'm your virtual assistant. You can customize me anytime."
-
+        return "I'm your virtual assistant, powered by machine learning."
+    
     elif intent == "help":
-        return "I can chat, answer questions, and soon perform tasks."
-
+        return "I can chat, answer questions, and grow smarter over time."
+    
     elif intent == "exit":
-        return "Goodbye! See you next time."
-
+        return "Goodbye! It was nice talking to you."
+    
     else:
-        return "I'm still learning. Could you rephrase that?"
+        return "I'm not sure I understood that."
+            
+
