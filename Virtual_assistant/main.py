@@ -15,7 +15,7 @@ def main():
     
     # ⚠️ KEY LINE: Creating an instance of the chatbot engine
 
-    print("🤖 ML-Powered Virtual Assistant is running. Type 'exit' to quit.\n")
+    print("🤖 Assistant with Memory is running. Type 'exit' to quit.\n")
 
     while True:
         user_input = input("You: ")
@@ -26,7 +26,7 @@ def main():
         print(f"Bot: {response}")
 
         # Exit condition
-# %%
+        
         if  intent == "exit":
 
             break
